@@ -28,7 +28,9 @@ def display_table_schema(table):
 def get_column(table, col_name):
     try:
         selected_table = table.select([col_name])
-        column = selected_table.column(0)
+        column = selected_table.to_pandas()[col_name]
+        column.name = col_name
+
         return column
     except KeyError:
         print(f"La colonne {col_name} n'existe pas dans la table.")
