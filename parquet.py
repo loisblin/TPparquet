@@ -8,11 +8,7 @@ def filtrer_par_ville(dataset, ville):
     result = dataset[dataset['nom'] == ville]
     return result
 
-<<<<<<< HEAD
-table_academie = parquet_to_table("academie.parquet")
-print(get_column(table_academie, "dep"))
-print(compute_statistics())
-=======
+
 
 def filtrer_par_departement_trier_par_ville(dataset, departement):
     filtered_data = dataset[dataset['dep'] == departement]
@@ -33,10 +29,28 @@ def display_ville_zone(df):
     print(result)
 
 
+def display_zone_ville(df,zone):
+    
+    result = df[df['vacances'] == zone]
+    return df[['nom']]
+
+
+
+def afficher_departements_par_zones(dataset, zones):
+    # Charger le dataset s'il n'est pas déjà en DataFrame pandas
+    if not isinstance(dataset, pd.DataFrame):
+        dataset = pd.read_parquet(dataset)  # Assurez-vous de remplacer le format de lecture si nécessaire
+
+    # Filtrer les données en fonction des zones de vacances spécifiques
+    try:
+        result = dataset[dataset['vacances'].isin(zones)][['vacances', 'dep']].drop_duplicates()
+        print(result)
+    except KeyError:
+        print("Les colonnes nécessaires n'existent pas dans le dataset.")  
+afficher_departements_par_zones(df_join_ville_academies,['Zone A','Zone B'])
 
 def number_ville_accademie(df):
     result = df.groupby('academie')['nom'].count().reset_index()
     result.columns = ['academie', 'nombre_villes']
     print(result)
 number_ville_accademie(df_join_ville_academies)
->>>>>>> 98509bd3c402cd0ff9b11a90291481946eb95dbc
